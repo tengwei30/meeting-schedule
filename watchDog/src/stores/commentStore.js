@@ -64,7 +64,6 @@ class CommentStore {
 
     @action
     setresponseData (res) {
-        console.info(res)
         for (let i in res.data) {
             res.data[i].beginTime = new Date(moment(res.data[i].beginTime)).getTime()
             res.data[i].endTime = new Date(moment(res.data[i].endTime)).getTime()

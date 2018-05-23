@@ -45,6 +45,9 @@
 .content{
     display: flex
 }
+.content .tui-full-calendar-layout {
+    width: 100%
+}
 .timeBlock{
     flex: 1;
     flex-direction: row-reverse;
