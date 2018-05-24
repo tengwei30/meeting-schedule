@@ -5,6 +5,10 @@ import './comment.css';
 import Calendar from 'tui-calendar';
 
 export default class Comment extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {}
+    }
     componentDidMount () {
         const cal = document.getElementById('content');
         const calendar = new Calendar(cal, {
@@ -17,19 +21,22 @@ export default class Comment extends React.Component {
                     return '<span class="calendar-font-icon ic-milestone-b"></span> <span style="background-color: ' + model.bgColor + '">' + model.title + '</span>';
                 },
                 allday: function(schedule) {
-                    return getTimeTemplate(schedule, true);
+                    return getTimeTemplate(schedule, true)
                 },
                 time: function(schedule) {
-                    return getTimeTemplate(schedule, false);
+                    return getTimeTemplate(schedule, false)
                 }
+            },
+            mouth: {
+                visibleWeeksCount: 2
             },
             week: {
                 daynames: ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
                 startDayOfWeek: 1,
-                // narrowWeekend: true
+                narrowWeekend: true
             }
         })
-        cal.on({
+        calendar.on({
             'clickSchedule': function(e) {
                 console.log('clickSchedule', e);
             },
@@ -56,12 +63,14 @@ export default class Comment extends React.Component {
                 // console.log('afterRenderSchedule', element);
             }
         })
-
-        $('#btn-save-schedule').on('click', onNewSchedule)
+        // document.getElementById('').click(function() {
+        //     console.log(1)
+        // })
+        document.getElementById('btn-save-schedule').addEventListener("click", this.onNewSchedule)
     }
     onNewSchedule() {
-        var title = $('#new-schedule-title').val();
-        var location = $('#new-schedule-location').val();
+        var title = document.getElementById('new-schedule-title').val();
+        var location = document.getElementById('new-schedule-location').val();
         var isAllDay = document.getElementById('new-schedule-allday').checked;
         var start = datePicker.getStartDate();
         var end = datePicker.getEndDate();
@@ -71,7 +80,7 @@ export default class Comment extends React.Component {
             return;
         }
 
-        cal.createSchedules([{
+        calendar.createSchedules([{
             id: String(chance.guid()),
             calendarId: calendar.id,
             title: title,
@@ -90,32 +99,32 @@ export default class Comment extends React.Component {
             state: 'Busy'
         }]);
 
-        $('#modal-new-schedule').modal('hide');
+        document.getElementById('modal-new-schedule').modal('hide');
     }
-    getTimeTemplate(schedule, isAllDay) {
-        var html = [];
-        var start = moment(schedule.start.toUTCString());
-        if (!isAllDay) {
-            html.push('<strong>' + start.format('HH:mm') + '</strong> ');
-        }
-        if (schedule.isPrivate) {
-            html.push('<span class="calendar-font-icon ic-lock-b"></span>');
-            html.push(' Private');
-        } else {
-            if (schedule.isReadOnly) {
-                html.push('<span class="calendar-font-icon ic-readonly-b"></span>');
-            } else if (schedule.recurrenceRule) {
-                html.push('<span class="calendar-font-icon ic-repeat-b"></span>');
-            } else if (schedule.attendees.length) {
-                html.push('<span class="calendar-font-icon ic-user-b"></span>');
-            } else if (schedule.location) {
-                html.push('<span class="calendar-font-icon ic-location-b"></span>');
-            }
-            html.push(' ' + schedule.title);
-        }
+    // getTimeTemplate(schedule, isAllDay) {
+    //     var html = [];
+    //     var start = moment(schedule.start.toUTCString());
+    //     if (!isAllDay) {
+    //         html.push('<strong>' + start.format('HH:mm') + '</strong> ');
+    //     }
+    //     if (schedule.isPrivate) {
+    //         html.push('<span class="calendar-font-icon ic-lock-b"></span>');
+    //         html.push(' Private');
+    //     } else {
+    //         if (schedule.isReadOnly) {
+    //             html.push('<span class="calendar-font-icon ic-readonly-b"></span>');
+    //         } else if (schedule.recurrenceRule) {
+    //             html.push('<span class="calendar-font-icon ic-repeat-b"></span>');
+    //         } else if (schedule.attendees.length) {
+    //             html.push('<span class="calendar-font-icon ic-user-b"></span>');
+    //         } else if (schedule.location) {
+    //             html.push('<span class="calendar-font-icon ic-location-b"></span>');
+    //         }
+    //         html.push(' ' + schedule.title);
+    //     }
 
-        return html.join('');
-    }
+    //     return html.join('');
+    // }
     render() {
         return(
             <div style={{width:'100%',height:800,backgroundColor: '#fff'}}>
