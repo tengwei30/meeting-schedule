@@ -44,7 +44,7 @@ export default class Chart extends React.Component {
                 <div className="CtContent">
                     <div className="calendar">
                         <div className="content">
-                            <div className="timeBlock">
+                            {/* <div className="timeBlock">
                                 <div style={{borderBottom: '3px solid #f3f3f3', height: 21,width:'100%',paddingBottom:'48px'}}></div>
                                 {
                                     times.map((item,key) => {
@@ -53,8 +53,8 @@ export default class Chart extends React.Component {
                                         )
                                     })
                                 }
-                            </div>
-                            {
+                            </div> */}
+                            {/* {
                                 commentStore.switchWeek ? (
                                     commentStore.columnData.slice(0, 7).map((item, key) => {
                                        return (
@@ -78,7 +78,7 @@ export default class Chart extends React.Component {
                                         )
                                      })
                                 )
-                            }
+                            } */}
                         </div>
                     </div>
                 </div>
