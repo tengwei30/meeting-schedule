@@ -80,6 +80,6 @@
   "dependencies": {
     "chance": "^1.0.16",
     "jshint": "^2.9.5",
-    "tui-calendar": "^1.2.2"
+    "tui-calendar": "^1.2.3"
   }
 }

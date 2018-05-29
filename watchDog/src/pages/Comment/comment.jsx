@@ -3,7 +3,7 @@ import React from 'react';
 import moment from 'moment';
 import './comment.css';
 import Calendar from 'tui-calendar';
-import datePicker from 'tui-date-picker'
+import datePicker from 'tui-date-picker';
 // import { chance } from 'chance';
 import { findCalendar } from '../../common/calendar.js';
 
@@ -17,16 +17,16 @@ export default class Comment extends React.Component {
     componentDidMount () {
         const { CalendarList } = this.state
         const calendarList = document.getElementById('calendarList')
-        const html = []
-        CalendarList.forEach(function(calendar) {
-            html.push('<div class="lnb-calendars-item"><label>' +
-                '<input type="checkbox" class="tui-full-calendar-checkbox-round" value="' + calendar.id + '" checked>' +
-                '<span style="border-color: ' + calendar.borderColor + '; background-color: ' + calendar.borderColor + ';"></span>' +
-                '<span>' + calendar.name + '</span>' +
-                '</label></div>'
-            )
-        })
-        calendarList.innerHTML = html.join('\n')
+        // const html = []
+        // CalendarList.forEach(function(calendar) {
+        //     html.push('<div class="lnb-calendars-item"><label>' +
+        //         '<input type="checkbox" class="tui-full-calendar-checkbox-round" value="' + calendar.id + '" checked>' +
+        //         '<span style="border-color: ' + calendar.borderColor + '; background-color: ' + calendar.borderColor + ';"></span>' +
+        //         '<span>' + calendar.name + '</span>' +
+        //         '</label></div>'
+        //     )
+        // })
+        // calendarList.innerHTML = html.join('\n')
         this.getInit()
     }
     getInit () {
@@ -34,7 +34,7 @@ export default class Comment extends React.Component {
         const { CalendarList } = this.state
 
         const calen = document.getElementById('content');
-        const cal = new Calendar(calen, {
+        window.cal = new Calendar(calen, {
             defaultView: 'week',
             taskView: false,
             useCreationPopup: true,
@@ -89,6 +89,8 @@ export default class Comment extends React.Component {
         // document.getElementById('btn-save-schedule').addEventListener("click", this.onNewSchedule)
     }
     saveNewSchedule (e) {
+        const { CalendarList } = this.state
+        const _this = this
         const calendar = e.calendar || findCalendar(e.calendarId);
                 const schedule = {
                     id: String(Math.random()),
@@ -115,23 +117,15 @@ export default class Comment extends React.Component {
                     schedule.borderColor = calendar.borderColor;
                 }
                 cal.createSchedules([schedule]);
-                // this.refreshScheduleVisibility()
-                var calendarElements = Array.prototype.slice.call(document.querySelectorAll('#calendarList input'));
-                CalendarList.forEach(function(calendar) {
-                    cal.toggleSchedules(calendar.id, !calendar.checked, false);
-                });
-                cal.render();
-                calendarElements.forEach(function(input) {
-                    var span = input.nextElementSibling;
-                    span.style.backgroundColor = input.checked ? span.style.borderColor : 'transparent';
-                });
+                _this.refreshScheduleVisibility();
     }
 
     refreshScheduleVisibility () {   // 更新数据的可见性
         const { CalendarList } = this.state
-        var calendarElements = Array.prototype.slice.call(document.querySelectorAll('#calendarList input'));
-
+        const calendarElements = Array.prototype.slice.call(document.querySelectorAll('#calendarList input'));
+        // console.log(CalendarList)
         CalendarList.forEach(function(calendar) {
+            console.log(calendar)
             cal.toggleSchedules(calendar.id, !calendar.checked, false);
         });
 
