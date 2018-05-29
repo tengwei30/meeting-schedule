@@ -78,6 +78,9 @@
     "webpack-merge": "^4.1.1"
   },
   "dependencies": {
-    "jshint": "^2.9.5"
+    "fullcalendar": "^3.9.0",
+    "fullcalendar-reactwrapper": "^1.0.7",
+    "jshint": "^2.9.5",
+    "react-big-calendar": "^0.19.1"
   }
 }

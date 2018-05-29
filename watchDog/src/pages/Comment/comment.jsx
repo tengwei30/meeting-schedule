@@ -3,27 +3,35 @@ import { Button } from 'antd';
 import moment from 'moment';
 import './comment.css';
 import Chart from './chart.jsx';
-import { inject, observer } from 'mobx-react';
+import BigCalendar from 'react-big-calendar'
+import 'react-big-calendar/lib/css/react-big-calendar.css'
+import events from '../../common/events.js'
 
-@inject('commentStore')
-@observer
+BigCalendar.momentLocalizer(moment)
+
 export default class Comment extends React.Component {
-    switchWeek = () => {
-        this.props.commentStore.setswitchWeek(!this.props.commentStore.switchWeek)
+    constructor(props) {
+        super(props);
+        this.state = {
+        }
+    }
+    selectSlot = (data) => {
+        console.log(data)
     }
     render() {
         return(
             <div style={{width:'100%',height:'100%'}}>
-                {this.todayRender()}
-                <Chart />
-            </div>
-        )
-    }
-    todayRender() {
-        return(
-            <div className="btnDate">
-                <p>今天：{moment().locale('zh-cn').format('dddd')}</p>
-                <p><Button type="primary" onClick={this.switchWeek}>{this.props.commentStore.switchWeek ? '本周' : '下周' }</Button></p>
+                <BigCalendar
+                    selectable
+                    popup
+                    events={events}
+                    defaultView="week"
+                    // scrollToTime={new Date(1970, 1, 1, 6)}
+                    views={['week', 'day']}
+                    defaultDate={new Date()}
+                    onSelectEvent={event => alert(event.title)}
+                    onSelectSlot={(slotInfo) => this.selectSlot(slotInfo) }
+                />
             </div>
         )
     }
