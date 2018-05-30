@@ -92,6 +92,7 @@ class Dmodal extends React.Component {
     render () {
         const { getFieldDecorator } = this.props.form;
         const { modalData, isModalData } = this.props.modalStore
+        console.log(modalData)
         return (
             <Modal
                 visible={this.props.modalStore.visibleModal}

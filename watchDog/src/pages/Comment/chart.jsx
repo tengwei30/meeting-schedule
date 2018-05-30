@@ -19,7 +19,7 @@ export default class Chart extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-
+            
         }
     }
     componentWillMount () {
@@ -36,15 +36,15 @@ export default class Chart extends React.Component {
         })
     }
     showModel = (item) => {
-        console.log(moment(item.start).format("YYYY-MM-DD"), item.end)
-        console.log(this.props.commentStore.responseData)
+        console.log(item)
+        // console.log(moment(item.start).format("YYYY-MM-DD"), item.end)
         // const nowTime = new Date(moment().format('YYYY-MM-DD HH:mm:ss')).getTime() - 1800000
         // if(val.time < nowTime) {
         //     message.warning("不可预定过去时间～")
         //     return false
         // }
         this.props.modalStore.setVisibleModal(true)
-        // this.props.modalStore.setmodalData(item)
+        this.props.modalStore.setmodalData(item)
         // this.props.modalStore.setisModalData(val)
     }
 
@@ -57,7 +57,7 @@ export default class Chart extends React.Component {
                         <div className="content">
                             <BigCalendar 
                                 selectable
-                                events={events}
+                                events={commentStore.listDatas}
                                 defaultView="week"
                                 defaultDate={new Date()}
                                 onSelectEvent={event => this.showModel(event)}

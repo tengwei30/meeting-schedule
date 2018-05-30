@@ -57,6 +57,22 @@ class CommentStore {
         return weeks
     }
 
+    @computed
+    get listDatas() {
+        let weeks = [];
+        mobx.toJS(this.responseData).map(val => {
+            weeks.push({
+                id: val.id,
+                title: val.description,
+                start: new Date(moment(val.beginTime).format()),
+                end: new Date(moment(val.endTime).format()),
+                roomId: val.roomId,
+                day: val.day
+            })
+        })
+        return weeks
+    }
+
     @action
     setswitchWeek (boolean) { // 本周/下周
         this.switchWeek = boolean
@@ -64,7 +80,6 @@ class CommentStore {
 
     @action
     setresponseData (res) {
-        console.info(res)
         for (let i in res.data) {
             res.data[i].beginTime = new Date(moment(res.data[i].beginTime)).getTime()
             res.data[i].endTime = new Date(moment(res.data[i].endTime)).getTime()
