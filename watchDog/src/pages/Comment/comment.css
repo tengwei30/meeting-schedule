@@ -45,6 +45,9 @@
 .content{
     display: flex
 }
+.content .rbc-calendar {
+    width: 100%
+}
 .timeBlock{
     flex: 1;
     flex-direction: row-reverse;

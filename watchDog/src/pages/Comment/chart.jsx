@@ -7,12 +7,20 @@ import { inject, observer } from 'mobx-react';
 import moment from 'moment';
 import Week from "./week.jsx";
 import Dmodal from './Modal.jsx';
+import BigCalendar from 'react-big-calendar'
+import events from '../../common/events.js'
+import 'react-big-calendar/lib/css/react-big-calendar.css' 
+
+BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment))
 
 @inject('commentStore', 'layoutStore','modalStore')
 @observer
 export default class Chart extends React.Component {
     constructor(props) {
         super(props)
+        this.state = {
+
+        }
     }
     componentWillMount () {
         autorun(() => {
@@ -27,16 +35,19 @@ export default class Chart extends React.Component {
             _this.props.commentStore.setresponseData(data)
         })
     }
-    showModel = (item, val) => {
-        const nowTime = new Date(moment().format('YYYY-MM-DD HH:mm:ss')).getTime() - 1800000
-        if(val.time < nowTime) {
-            message.warning("不可预定过去时间～")
-            return false
-        }
+    showModel = (item) => {
+        console.log(moment(item.start).format("YYYY-MM-DD"), item.end)
+        console.log(this.props.commentStore.responseData)
+        // const nowTime = new Date(moment().format('YYYY-MM-DD HH:mm:ss')).getTime() - 1800000
+        // if(val.time < nowTime) {
+        //     message.warning("不可预定过去时间～")
+        //     return false
+        // }
         this.props.modalStore.setVisibleModal(true)
-        this.props.modalStore.setmodalData(item)
-        this.props.modalStore.setisModalData(val)
+        // this.props.modalStore.setmodalData(item)
+        // this.props.modalStore.setisModalData(val)
     }
+
     render() {
         const {commentStore} = this.props
         return(
@@ -44,41 +55,15 @@ export default class Chart extends React.Component {
                 <div className="CtContent">
                     <div className="calendar">
                         <div className="content">
-                            {/* <div className="timeBlock">
-                                <div style={{borderBottom: '3px solid #f3f3f3', height: 21,width:'100%',paddingBottom:'48px'}}></div>
-                                {
-                                    times.map((item,key) => {
-                                        return(
-                                            <div key={key} className="clock">{item}</div>
-                                        )
-                                    })
-                                }
-                            </div> */}
-                            {/* {
-                                commentStore.switchWeek ? (
-                                    commentStore.columnData.slice(0, 7).map((item, key) => {
-                                       return (
-                                           <div className="weekday" key={key}>
-                                               <Week
-                                                    {...item}
-                                                    onShow = {this.showModel}
-                                                />
-                                           </div>
-                                       )
-                                    })
-                                ) : (
-                                    commentStore.columnData.slice(7, 14).map((item, key)=> {
-                                        return (
-                                            <div className="weekday" key={key}>
-                                                <Week
-                                                     {...item}
-                                                     onShow = {this.showModel}
-                                                 />
-                                            </div>
-                                        )
-                                     })
-                                )
-                            } */}
+                            <BigCalendar 
+                                selectable
+                                events={events}
+                                defaultView="week"
+                                defaultDate={new Date()}
+                                onSelectEvent={event => this.showModel(event)}
+                                onSelectSlot={slotInfo =>this.showModel(slotInfo)}
+                                views={['day', 'week']}
+                            />
                         </div>
                     </div>
                 </div>
