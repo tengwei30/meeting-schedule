@@ -92,7 +92,7 @@ class Dmodal extends React.Component {
     render () {
         const { getFieldDecorator } = this.props.form;
         const { modalData, isModalData } = this.props.modalStore
-        console.log(modalData)
+        console.log(moment(modalData.start).format('YYYY-MM-DD'))
         return (
             <Modal
                 visible={this.props.modalStore.visibleModal}
@@ -105,7 +105,8 @@ class Dmodal extends React.Component {
                         <Col span={11}>
                             <FormItem>
                                 {getFieldDecorator('beginTime', {
-                                    initialValue: isModalData.beginTime ? moment(isModalData.beginTime).format('YYYY-MM-DD HH:mm:ss') : moment(isModalData.time).format('YYYY-MM-DD HH:mm:ss')
+                                    // initialValue: isModalData.beginTime ? moment(isModalData.beginTime).format('YYYY-MM-DD HH:mm:ss') : moment(isModalData.time).format('YYYY-MM-DD HH:mm:ss')
+                                    initialValue: modalData.id ? moment(modalData.start).format('YYYY-MM-DD HH:mm:ss') : moment(modalData.start).format('YYYY-MM-DD HH:mm:ss')
                                 })(
                                 <Select
                                     placeholder="开始时间"
@@ -132,7 +133,7 @@ class Dmodal extends React.Component {
                         <Col span={11}>
                             <FormItem>
                                 {getFieldDecorator('endTime',{
-                                    initialValue: isModalData.endTime ? moment(isModalData.endTime).format('YYYY-MM-DD HH:mm:ss') : moment(isModalData.time).format('YYYY-MM-DD HH:mm:ss')
+                                    initialValue: modalData.id ? moment(modalData.end).format('YYYY-MM-DD HH:mm:ss') : moment(isModalData.time).format('YYYY-MM-DD HH:mm:ss')
                                 })(
                                     <Select
                                     placeholder="结束时间"
@@ -155,14 +156,14 @@ class Dmodal extends React.Component {
                     </FormItem>
                     <FormItem>
                         {getFieldDecorator('name',{
-                            initialValue: isModalData.description ? isModalData.description.split('-')[0] : ''
+                            initialValue: modalData.id ? modalData.title.split('-')[0] : ''
                         })(
                             <TextArea style={{resize:'none'}} rows={2} placeholder="请添写使用者" />
                         )}
                     </FormItem>
                     <FormItem>
                         {getFieldDecorator('desc',{
-                            initialValue: isModalData.description ? isModalData.description.split('-')[1] : ''
+                            initialValue: modalData.id ? modalData.title.split('-')[1] : ''
                         })(
                             <TextArea style={{resize:'none'}} rows={2} placeholder="请添写使用主题" />
                         )}

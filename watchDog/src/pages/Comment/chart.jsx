@@ -60,7 +60,7 @@ export default class Chart extends React.Component {
                                 events={commentStore.listDatas}
                                 defaultView="week"
                                 defaultDate={new Date()}
-                                onSelectEvent={event => this.showModel(event)}
+                                // onSelectEvent={event => this.showModel(event)}
                                 onSelectSlot={slotInfo =>this.showModel(slotInfo)}
                                 views={['day', 'week']}
                             />
